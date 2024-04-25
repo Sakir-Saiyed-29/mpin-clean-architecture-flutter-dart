@@ -1,4 +1,6 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mpin_demo/core/error/failure.dart';
 import 'package:mpin_demo/features/set_mpin/data/datasources/mpin_local_datasource.dart';
 import 'package:mpin_demo/features/set_mpin/data/models/mpin_model.dart';
 import 'package:mpin_demo/features/set_mpin/domain/entities/mpin_entity.dart';
@@ -11,7 +13,7 @@ class MpinRepositoryImpl implements MpinRepository {
 
   @override
   Future<List<MpinEntity>> getMpin() async {
-    final pinModels = mPinLocalDataSource.getMpin();
+    final pinModels = mPinLocalDataSource.getMpinFromDB();
     final pins = pinModels.map((e) => MpinEntity.toEntity(e)).toList();
     return pins;
   }
@@ -19,6 +21,6 @@ class MpinRepositoryImpl implements MpinRepository {
   @override
   Future<void> setMpin(MpinEntity pinObj) async {
     debugPrint('Repository Imp called..');
-    mPinLocalDataSource.saveMpin(MpinModel.fromEntity(pinObj));
+    mPinLocalDataSource.saveMpinToDB(MpinModel.fromEntity(pinObj));
   }
 }

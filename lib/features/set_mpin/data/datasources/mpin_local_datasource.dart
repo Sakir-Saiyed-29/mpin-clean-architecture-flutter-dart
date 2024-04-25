@@ -4,8 +4,8 @@ import 'package:mpin_demo/features/set_mpin/data/models/mpin_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class IMPinLocalDataSource {
-  List<MpinModel> getMpin();
-  void saveMpin(MpinModel mpinModel);
+  List<MpinModel> getMpinFromDB();
+  void saveMpinToDB(MpinModel mpinModel);
 }
 
 class MPinLocalDataSource implements IMPinLocalDataSource {
@@ -14,7 +14,7 @@ class MPinLocalDataSource implements IMPinLocalDataSource {
   MPinLocalDataSource({required this.sharedPreferences});
 
   @override
-  List<MpinModel> getMpin() {
+  List<MpinModel> getMpinFromDB() {
     List<MpinModel> mpinList;
     List<String>? listString = sharedPreferences.getStringList('list');
     if (listString != null) {
@@ -27,8 +27,8 @@ class MPinLocalDataSource implements IMPinLocalDataSource {
   }
 
   @override
-  void saveMpin(MpinModel mpinModel) {
-    List<MpinModel> mpinModelList = getMpin();
+  void saveMpinToDB(MpinModel mpinModel) {
+    List<MpinModel> mpinModelList = getMpinFromDB();
     mpinModelList.add(mpinModel);
     debugPrint('Data source Imp called..');
     List<String> mpinList = [];
